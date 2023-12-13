@@ -6,74 +6,45 @@
 /*   By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 15:09:09 by jcummins          #+#    #+#             */
-/*   Updated: 2023/12/11 17:53:56 by jcummins         ###   ########.fr       */
+/*   Updated: 2023/12/13 18:48:27 by jcummins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	print_str (char *print)
+int	format(va_list arg, char c)
 {
-	int i;
-
-	i = 0;
-	while (print[i])
-		write (1, &print[i], 1);
-	return (i);
-}
-
-int	print_hex (int print)
-{
-	char c;
-
-	c = print + '0';
-	write (1, &c, 1);
-	return (1);
-}
-
-int	print_char (int print)
-{
-	char c;
-
-	c = print + '0';
-	write (1, &c, 1);
-	return (1);
-}
-
-int	print_digit (int print)
-{
-	char	c;
-
-	c = print + '0';
-	if (c < '0' || c > '9')
-		return (-1);
-	write (1, &c, 1);
-	return (1);
-}
-
-int	format (va_list arg, char c)
-{
-	int len;
+	int				len;
+	unsigned int	u_arg;
 
 	len = 0;
 	if (c == 'd' || c == 'i')
-		len += print_digit(va_arg(arg, int));
+		len += print_int(va_arg(arg, int));
+	if (c == 'u')
+	{
+		u_arg = (unsigned int)va_arg(arg, int);
+		len += print_usi(u_arg);
+	}
 	if (c == 'c')
 		len += print_char(va_arg(arg, int));
 	if (c == 's')
 		len += print_str(va_arg(arg, char *));
 	if (c == 'x')
-		len += print_hex(va_arg(arg, int));
+		len += print_hex(va_arg(arg, int), 0);
+	if (c == 'X')
+		len += print_hex(va_arg(arg, int), 1);
+	if (c == 'p')
+		len += print_ptr(va_arg(arg, void *));
 	else if (c == '%')
-		write (1, "%", 1);
-	return (1);
+		len += print_char('%');
+	return (len);
 }
 
-int	ft_printf (const char *str, ...)
+int	ft_printf(const char *str, ...)
 {
 	va_list	argptr;
 	int		i;
-	int 	len;
+	int		len;
 
 	i = 0;
 	len = 0;
@@ -97,13 +68,19 @@ int	ft_printf (const char *str, ...)
 	return (len);
 }
 
-int	main (void)
+int	main(void)
 {
-	int		i = 99;
+	int		i = -128;
 	char	*str = "tester";
 	char	c = 'P';
+	int		og_pf;
+	int		ft_pf;
+	void	*ptr = malloc(1);
 
-	printf("%%Your integer is %d, your string is %s, your char is %c.\n", i, str, c);
-	ft_printf("%%Your integer is %d, your string is %s, your char is %c.\n", i, str, c);
+	og_pf = printf("%%Int is %x, string is %s, char is %c, ptr is %p.\n", i, str, c, ptr);
+	ft_pf = ft_printf("%%Int is %x, string is %s, char is %c, ptr is %p.\n", i, str, c, ptr);
+	printf("The built in function returned length of %d\n", og_pf);
+	printf("The fake function returned length of %d\n", ft_pf);
+	free (ptr);
 	return (0);
 }
