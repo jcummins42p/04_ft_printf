@@ -6,7 +6,7 @@
 /*   By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 15:09:09 by jcummins          #+#    #+#             */
-/*   Updated: 2023/12/13 18:48:27 by jcummins         ###   ########.fr       */
+/*   Updated: 2023/12/15 20:21:45 by jcummins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,21 +66,4 @@ int	ft_printf(const char *str, ...)
 	}
 	va_end(argptr);
 	return (len);
-}
-
-int	main(void)
-{
-	int		i = -128;
-	char	*str = "tester";
-	char	c = 'P';
-	int		og_pf;
-	int		ft_pf;
-	void	*ptr = malloc(1);
-
-	og_pf = printf("%%Int is %x, string is %s, char is %c, ptr is %p.\n", i, str, c, ptr);
-	ft_pf = ft_printf("%%Int is %x, string is %s, char is %c, ptr is %p.\n", i, str, c, ptr);
-	printf("The built in function returned length of %d\n", og_pf);
-	printf("The fake function returned length of %d\n", ft_pf);
-	free (ptr);
-	return (0);
 }

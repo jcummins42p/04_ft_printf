@@ -6,7 +6,7 @@
 /*   By: jcummins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 16:59:21 by jcummins          #+#    #+#             */
-/*   Updated: 2023/12/13 18:47:33 by jcummins         ###   ########.fr       */
+/*   Updated: 2023/12/15 19:29:03 by jcummins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@ int	print_str(char *str)
 {
 	int	i;
 
-	if (str == NULL)
-		return (-1);
 	i = 0;
-	while (str[i])
-		write (1, &str[i++], 1);
+	if (str == NULL)
+		i = print_str("(null)");
+	else
+		while (str[i])
+			write (1, &str[i++], 1);
 	return (i);
 }
 
