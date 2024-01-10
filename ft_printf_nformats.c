@@ -6,7 +6,7 @@
 /*   By: jcummins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 18:29:34 by jcummins          #+#    #+#             */
-/*   Updated: 2023/12/13 18:56:15 by jcummins         ###   ########.fr       */
+/*   Updated: 2023/12/15 20:18:22 by jcummins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,28 @@ int	print_usi(unsigned int num)
 	return (i);
 }
 
-int	print_hex(unsigned long long num, int cap)
+int	print_hex_ptr(unsigned long long num, int cap)
 {
-	int	i;
-	int	print;
+	int			i;
+	int			print;
+
+	i = 1;
+	if (num >= 16)
+		i += print_hex_ptr(num / 16, cap);
+	print = num % 16;
+	if (print < 0)
+		print = -print;
+	if (!cap)
+		print_char("0123456789abcdef"[num % 16]);
+	if (cap)
+		print_char("0123456789ABCDEF"[num % 16]);
+	return (i);
+}
+
+int	print_hex(unsigned int num, int cap)
+{
+	int			i;
+	int			print;
 
 	i = 1;
 	if (num >= 16)
@@ -71,8 +89,13 @@ int	print_ptr(void *ptr)
 {
 	int		i;
 
-	i = 2;
-	print_str("0x");
-	i += print_hex((unsigned long long)ptr, 0);
+	i = 0;
+	if (!ptr)
+		i += print_str("(nil)");
+	else
+	{
+		i += print_str("0x");
+		i += print_hex_ptr((unsigned long long)ptr, 0);
+	}
 	return (i);
 }
