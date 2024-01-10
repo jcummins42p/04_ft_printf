@@ -6,11 +6,8 @@
 /*   By: jcummins <jcummins@student.42prague.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 15:09:09 by jcummins          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/01/10 11:51:13 by jcummins         ###   ########.fr       */
-=======
+/*   Updated: 2024/01/10 12:02:28 by jcummins         ###   ########.fr       */
 /*   Updated: 2023/12/15 20:21:45 by jcummins         ###   ########.fr       */
->>>>>>> refs/remotes/origin/main
 /*                                                                            */
 /* ************************************************************************** */
 
